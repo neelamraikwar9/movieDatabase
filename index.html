@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>VA5_Assignment</title>
+    <link
+      rel="stylesheet"
+      href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container py-3">
+      <h1>Movie Database</h1>
+      <h2>GET MOVIES</h2>
+      <button id="getMoviesContainer" class="btn btn-primary">
+        Get Movies
+      </button>
+      <br />
+      <div id="createCards"></div>
+      <br />
+
+      <form id="postMovieForm">
+        <h2>POST Movie</h2>
+        <label for="title">Title:</label>
+        <br />
+        <input type="text" id="title" class="form-control" required />
+        <br />
+        <br />
+        <label for="year">Release Year:</label>
+        <br />
+        <input type="number" id="year" class="form-control" required />
+        <br />
+        <br />
+        <label for="genre">Genre:</label>
+        <br />
+        <select id="genre" class="form-control" required>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Romance">Romance</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Horror">Horror</option>
+          <option value="Sports">Sports</option>
+          <option value="Musical">Musical</option>
+          <option value="Other">Other</option>
+        </select>
+        <br />
+        <br />
+        <label for="director">Director:</label>
+        <br />
+        <input type="text" id="director" class="form-control" required />
+        <br />
+        <br />
+        <label for="language">Language:</label>
+        <br />
+        <input type="text" id="language" class="form-control" required />
+        <br />
+        <br />
+        <label for="country">Country:</label>
+        <br />
+        <select id="country" class="form-control" required>
+          <option>India</option>
+          <option>USA</option>
+          <option>UK</option>
+        </select>
+        <br />
+        <br />
+        <label for="rating">Rating:</label>
+        <br />
+        <input
+          type="number"
+          id="rating"
+          value="0"
+          class="form-control"
+          required
+        />
+        <br />
+        <br />
+        <label for="plot">Plot:</label>
+        <br />
+        <textarea id="plot" class="form-control" required></textarea>
+        <br />
+        <br />
+        <label for="awards">Awards:</label>
+        <br />
+        <input type="text" id="awards" class="form-control" required />
+        <br />
+        <br />
+        <label for="pUrl">Poster URL:</label>
+        <br />
+        <input type="text" id="pUrl" class="form-control" required />
+        <br />
+        <br />
+        <label for="tUrl">Trailer URL:</label>
+        <br />
+        <input type="text" id="tUrl" class="form-control" required />
+        <br />
+        <br />
+        <button class="btn btn-success">Add Movie</button>
+      </form>
+      <br />
+      <div id="movieContainer"></div>
+    </div>
+
+    <script>
+      const postMovieForm = document.querySelector("#postMovieForm");
+      const title = document.getElementById("title");
+      const year = document.getElementById("year");
+      const genre = document.getElementById("genre");
+      const director = document.getElementById("director");
+      const language = document.getElementById("language");
+      const country = document.getElementById("country");
+      const rating = document.getElementById("rating");
+      const plot = document.getElementById("plot");
+      const awards = document.getElementById("awards");
+      const pUrl = document.getElementById("pUrl");
+      const tUrl = document.getElementById("tUrl");
+
+      const createCards = document.querySelector("#createCards");
+
+      const apiUrl =
+        "https://va-5-assignment-express-student-neog.replit.app/movies";
+
+      getMoviesContainer.addEventListener("click", function () {
+        fetch(apiUrl)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data) {
+              // console.log(data);
+              for (let i = 0; i < data.length; i++) {
+                const div = document.createElement("div");
+                div.className = "container card py-3 mt-2";
+
+                const movieId = document.createElement("h3");
+                movieId.innerHTML = `Movie Id: ${data[i]._id}`;
+
+                const movieTitle = document.createElement("p");
+                movieTitle.textContent = `Title: ${JSON.stringify(
+                  data[i].title
+                )}`;
+
+                const releaseYear = document.createElement("p");
+                releaseYear.textContent = `releaseYear: ${JSON.stringify(
+                  data[i].releaseYear
+                )}`;
+
+                const genre = document.createElement("p");
+                genre.textContent = `Genre: ${JSON.stringify(data[i].genre)}`;
+
+                const director = document.createElement("p");
+                director.textContent = `Director: ${JSON.stringify(
+                  data[i].director
+                )}`;
+
+                const language = document.createElement("p");
+                language.textContent = `Language: ${JSON.stringify(
+                  data[i].language
+                )}`;
+
+                const country = document.createElement("p");
+                language.textContent = `Country: ${JSON.stringify(
+                  data[i].country
+                )}`;
+
+                const rating = document.createElement("p");
+                rating.textContent = `Rating: ${JSON.stringify(
+                  data[i].rating
+                )}`;
+
+                const plot = document.createElement("p");
+                plot.textContent = `Plot: ${JSON.stringify(data[i].plot)}`;
+
+                const awards = document.createElement("p");
+                awards.textContent = `Awards: ${JSON.stringify(
+                  data[i].awards
+                )}`;
+
+                const posterUrl = document.createElement("p");
+                posterUrl.textContent = `PosterUrl: ${JSON.stringify(
+                  data[i].posterUrl
+                )}`;
+
+                const trailerUrl = document.createElement("p");
+                trailerUrl.textContent = `TrailerUrl: ${JSON.stringify(
+                  data[i].trailerUrl
+                )}`;
+
+                div.appendChild(movieId);
+                div.appendChild(movieTitle);
+                div.appendChild(releaseYear);
+                div.appendChild(genre);
+                div.appendChild(director);
+                div.appendChild(language);
+                div.appendChild(country);
+                div.appendChild(rating);
+                div.appendChild(plot);
+                div.appendChild(awards);
+                div.appendChild(posterUrl);
+                div.appendChild(trailerUrl);
+
+                createCards.appendChild(div);
+              }
+            }
+          });
+      });
+
+      postMovieForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const movieData = {
+          title: title.value,
+          releaseYear: year.value,
+          genre: genre.value,
+          director: director.value,
+          language: language.value,
+          country: country.value,
+          rating: rating.value,
+          plot: plot.value,
+          awards: awards.value,
+          posterUrl: pUrl.value,
+          trailerUrl: tUrl.value,
+        };
+        fetch(apiUrl, {
+          method: "POST",
+          body: JSON.stringify(movieData),
+          headers: { "content-type": "application/json" },
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data) {
+              // console.log(data);
+              movieContainer.textContent = "Movie added Successfully.";
+            } else {
+              movieContainer.textContent = "Failed to add Todo.";
+            }
+          })
+          .catch(function (error) {
+            movieContainer.textContent = "An error occured while adding Todo.";
+          });
+      });
+    </script>
+  </body>
+</html>
